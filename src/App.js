@@ -1,16 +1,10 @@
 import "./App.scss";
+import Header from "./components/Header/Header";
 
 const App = () => {
-  const handleClick = () => {
-    console.log("Button clicked!");
-    alert("Button clicked!");
-  };
   return (
     <div className="app-container">
-      hello word
-      <button className="btn btn-primary" onClick={handleClick}>
-        Test
-      </button>
+      <Header />
     </div>
   );
 };
