@@ -51,9 +51,10 @@ body {
       .btn-content {
         button {
           border-radius: 5px;
-          padding: 7px 15px;
+          padding: 8px 15px;
           background-color: #303030;
           color: white;
+          border: none;
           &:hover {
             background-color: black;
           }
