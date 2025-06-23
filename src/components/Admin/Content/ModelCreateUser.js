@@ -1,25 +1,81 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import "./ManageUser.scss"; // Assuming you have a CSS file for styling
+import { FcPlus } from "react-icons/fc";
+import axios from "axios";
 
-function ModelCreateUser() {
-  const [show, setShow] = useState(false);
+function ModelCreateUser(props) {
+  const { show, setShow } = props; //object dung {}
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setRole("USER");
+    setImage("");
+    setPreviewImage("");
+  };
   const handleShow = () => setShow(true);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [role, setRole] = useState("USER");
+  const [image, setImage] = useState("");
+  const [preivewImage, setPreviewImage] = useState("");
+
+  const handleUploadImage = (e) => {
+    if (e?.target?.files?.[0]) {
+      setPreviewImage(URL.createObjectURL(e.target.files[0]));
+      setImage(e.target.files[0]); //goi len server
+      //   console.log("helo");
+    }
+  };
+
+  const handSubitCreateUser = async () => {
+    //validate
+
+    //call API
+
+    // C1: Dùng cho các biến bình thường
+    // let data = {
+    //   email: email,
+    //   password: password,
+    //   username: username,
+    //   role: role,
+    //   userImage: image, //mau tim la gia lay tu const ben treen
+    // };
+    // console.log(data);
+
+    // Cách 2: dùng cho gửi file
+    const data = new FormData();
+    data.append("email", email);
+    data.append("password", password);
+    data.append("username", username);
+    data.append("role", role);
+    data.append("userIamge", image);
+
+    let res = await axios.post(
+      "http://localhost:8081/api/v1/participant",
+      data
+    );
+    console.log(">>>Check", res);
+  };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
-      </Button>
+      </Button> */}
 
       <Modal
         show={show}
         onHide={handleClose}
         size="xl"
         backdrop="static"
-        keyboard={false}
+        className="model-add-user"
       >
         <Modal.Header closeButton>
           <Modal.Title>Admin new user</Modal.Title>
@@ -28,29 +84,63 @@ function ModelCreateUser() {
           <form className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Email</label>
-              <input type="email" className="form-control" />
+              <input
+                type="email"
+                className="form-control"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="col-md-6">
               <label className="form-label">Password</label>
-              <input type="password" className="form-control" />
+              <input
+                type="password"
+                className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
 
             <div className="col-md-6">
               <label className="form-label">UserName</label>
-              <input type="text" className="form-control" />
+              <input
+                type="text"
+                className="form-control"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
             <div className="col-md-4">
               <label className="form-label">Role</label>
-              <select className="form-select">
-                <option selected value={"USER"}>
-                  USER
-                </option>
+              <select
+                className="form-select"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value={"USER"}>USER</option>
                 <option value={"ADMIN"}>ADMIN</option>
               </select>
             </div>
+
             <div className="col-md-12">
-              <label className="form-label">Image</label>
-              <input type="file" className="form-control" />
+              <label className="form-label lable-upload" htmlFor="labelUpload">
+                <FcPlus /> Upload File Image
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                hidden
+                id="labelUpload"
+                onChange={handleUploadImage}
+              />
+            </div>
+
+            <div className="col-md-12 img-preview">
+              {preivewImage ? (
+                <img src={preivewImage} alt="Preview" />
+              ) : (
+                <span>Preview Image</span>
+              )}
             </div>
           </form>
         </Modal.Body>
@@ -58,7 +148,7 @@ function ModelCreateUser() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={() => handSubitCreateUser()}>
             Save
           </Button>
         </Modal.Footer>
