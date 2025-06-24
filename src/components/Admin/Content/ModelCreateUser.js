@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./ManageUser.scss"; // Assuming you have a CSS file for styling
 import { FcPlus } from "react-icons/fc";
-import axios from "axios";
-
+import { toast } from "react-toastify";
+import { postCreateNewUser } from "../../../services/apiServices";
 function ModelCreateUser(props) {
   const { show, setShow } = props; //object dung {}
 
@@ -34,6 +34,14 @@ function ModelCreateUser(props) {
     }
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const handSubitCreateUser = async () => {
     //validate
 
@@ -49,19 +57,40 @@ function ModelCreateUser(props) {
     // };
     // console.log(data);
 
-    // Cách 2: dùng cho gửi file
-    const data = new FormData();
-    data.append("email", email);
-    data.append("password", password);
-    data.append("username", username);
-    data.append("role", role);
-    data.append("userIamge", image);
+    const isValidateEmail = validateEmail(email);
+    if (!isValidateEmail) {
+      toast.error("Invalid Email");
+      return;
+    }
 
-    let res = await axios.post(
-      "http://localhost:8081/api/v1/participant",
-      data
-    );
-    console.log(">>>Check", res);
+    if (!password) {
+      toast.error("Invalid password");
+      return;
+    }
+
+    if (!username) {
+      toast.error("Invalid Username");
+      return;
+    }
+
+    // // Cách 2: dùng cho gửi file
+    // const data = new FormData();
+    // data.append("email", email);
+    // data.append("password", password);
+    // data.append("username", username);
+    // data.append("role", role);
+    // data.append("userIamge", image);
+
+    let data = await postCreateNewUser(email, password, username, role, image);
+    console.log(">>>Check", data);
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
+      handleClose();
+    }
+
+    if (data && data.EC !== 0) {
+      toast.error(data.EM);
+    }
   };
 
   return (
