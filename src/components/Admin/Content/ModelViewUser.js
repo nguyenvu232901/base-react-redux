@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { putUpdateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
-const ModelUpdateUser = (props) => {
+const ModelViewUser = (props) => {
   const { show, setShow, dataUpdate } = props; //object dung {}
 
   const handleClose = () => {
@@ -101,7 +101,7 @@ const ModelUpdateUser = (props) => {
     }
   };
 
-  // console.log("check dataUpdate", dataUpdate);
+  console.log("check dataUpdate", dataUpdate);
 
   return (
     <>
@@ -117,7 +117,7 @@ const ModelUpdateUser = (props) => {
         className="model-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>update a user</Modal.Title>
+          <Modal.Title>Detail view a user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
@@ -148,6 +148,7 @@ const ModelUpdateUser = (props) => {
                 type="text"
                 className="form-control"
                 value={username}
+                disabled
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -156,6 +157,7 @@ const ModelUpdateUser = (props) => {
               <select
                 className="form-select"
                 value={role}
+                disabled
                 onChange={(e) => setRole(e.target.value)}
               >
                 <option value={"USER"}>USER</option>
@@ -172,6 +174,7 @@ const ModelUpdateUser = (props) => {
                 className="form-control"
                 hidden
                 id="labelUpload"
+                disabled
                 onChange={handleUploadImage}
               />
             </div>
@@ -189,13 +192,13 @@ const ModelUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handSubitCreateUser()}>
+          {/* <Button variant="primary" onClick={() => handSubitCreateUser()}>
             Save
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default ModelUpdateUser;
+export default ModelViewUser;

@@ -5,12 +5,17 @@ import { useState, useEffect } from "react";
 import TableUser from "./TableUser";
 import { getAllUsers } from "../../../services/apiServices";
 import ModelUpdateUser from "./ModelUpdateUser";
+import ModelViewUser from "./ModelViewUser";
+import ModelDeleteUser from "./ModelDeleteUser";
 
 const ManageUser = (props) => {
   const [showModelCreateUser, setShowModelCreateUser] = useState(false);
   const [showModelUpdateUser, setShowModelUpdateUser] = useState(false);
+  const [showModelViewUser, setShowModeViewUser] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
+  const [dataDelete, setDataDelete] = useState({});
 
+  const [showModelDeleteUser, setShowModelDeleteuser] = useState(false);
   const [listUsers, setListUsers] = useState([]);
 
   //componentDidMount
@@ -37,6 +42,18 @@ const ManageUser = (props) => {
     setDataUpdate();
   };
 
+  const handleClickBtnView = (user) => {
+    setShowModeViewUser(true);
+    setDataUpdate(user);
+    console.log("Update user", user);
+  };
+
+  const handleClickBtnDelete = (user) => {
+    setShowModelDeleteuser(true);
+    setDataDelete(user);
+    console.log("Delete user", user);
+  };
+
   return (
     <div className="manage-user-container">
       <div className="title">Manage User</div>
@@ -54,6 +71,8 @@ const ManageUser = (props) => {
           <TableUser
             listUsers={listUsers}
             handleClickBtnUpdate={handleClickBtnUpdate}
+            handleClickBtnView={handleClickBtnView}
+            handleClickBtnDelete={handleClickBtnDelete}
           />
         </div>
         <ModelCreateUser
@@ -67,6 +86,19 @@ const ManageUser = (props) => {
           dataUpdate={dataUpdate}
           fetchListUsers={fetchListUsers}
           resetUpdateData={resetUpdateData}
+        />
+
+        <ModelViewUser
+          show={showModelViewUser}
+          setShow={setShowModeViewUser}
+          dataUpdate={dataUpdate}
+          resetUpdateData={resetUpdateData}
+        />
+
+        <ModelDeleteUser
+          show={showModelDeleteUser}
+          setShow={setShowModelDeleteuser}
+          dataDelete={dataDelete}
         />
       </div>
     </div>
