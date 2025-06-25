@@ -13,8 +13,10 @@ import ModelDeleteUser from "./ModelDeleteUser";
 import TableUserPaginate from "./TableUserPaginate";
 
 const ManageUser = (props) => {
-  const LIMIT_USER = 5;
+  const LIMIT_USER = 3;
   const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [showModelCreateUser, setShowModelCreateUser] = useState(false);
   const [showModelUpdateUser, setShowModelUpdateUser] = useState(false);
   const [showModelViewUser, setShowModeViewUser] = useState(false);
@@ -99,12 +101,17 @@ const ManageUser = (props) => {
             handleClickBtnDelete={handleClickBtnDelete}
             fetchListUsersPaginate={fetchListUsersPaginate}
             pageCount={pageCount}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
           />
         </div>
         <ModelCreateUser
           show={showModelCreateUser}
           setShow={setShowModelCreateUser}
           fetchListUsers={fetchListUsers}
+          fetchListUsersPaginate={fetchListUsersPaginate}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
         <ModelUpdateUser
           show={showModelUpdateUser}
@@ -112,6 +119,9 @@ const ManageUser = (props) => {
           dataUpdate={dataUpdate}
           fetchListUsers={fetchListUsers}
           resetUpdateData={resetUpdateData}
+          fetchListUsersPaginate={fetchListUsersPaginate}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
 
         <ModelViewUser
@@ -126,6 +136,9 @@ const ManageUser = (props) => {
           setShow={setShowModelDeleteuser}
           dataDelete={dataDelete}
           fetchListUsers={fetchListUsers}
+          fetchListUsersPaginate={fetchListUsersPaginate}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </div>
