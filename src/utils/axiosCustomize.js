@@ -26,6 +26,8 @@ instance.interceptors.request.use(
     return config;
   },
   function (error) {
+    NProgress.start(); // Start the loading indicator
+
     // Do something with request error
     return Promise.reject(error);
   }
@@ -41,6 +43,8 @@ instance.interceptors.response.use(
     return response && response.data ? response.data : response;
   },
   function (error) {
+    NProgress.done(); // Stop the loading indicator
+
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     console.log(">>> run error", error.response);
