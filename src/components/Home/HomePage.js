@@ -1,6 +1,5 @@
 import videoHomepage from "../../assets/video-homepage.mp4";
 import { useSelector, useDispatch } from "react-redux";
-import { INCREMENT, DECREMENT } from "../../redux/action/counterAction";
 
 const HomePage = (props) => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);

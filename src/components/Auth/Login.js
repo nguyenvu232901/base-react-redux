@@ -102,12 +102,15 @@ import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction"; // Import the doLogin action
+import { ImSpinner10 } from "react-icons/im"; // Import spinner icon
+import { set } from "lodash";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setpassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false); // State to manage loading
 
   const handleRegister = () => {
     navigate("/register");
@@ -115,16 +118,19 @@ const Login = (props) => {
   const handleLogin = async () => {
     //validate
 
+    setIsLoading(true); // Set loading state to true
     //submit api
     let data = await postLogin(email, password);
     if (data && +data.EC === 0) {
       dispatch(doLogin(data));
       toast.success(data.EM);
+      setIsLoading(false); // Reset loading state
       navigate("/");
     }
 
     if (data && +data.EC !== 0) {
       toast.error(data.EM);
+      setIsLoading(false);
     }
     // console.log(">>check login: ", data);
   };
@@ -172,8 +178,13 @@ const Login = (props) => {
         </div>
         <span className="forgot-password">Forgot password</span>
         <div>
-          <button className="btn-submit" onClick={() => handleLogin()}>
-            Login
+          <button
+            className="btn-submit"
+            onClick={() => handleLogin()}
+            disabled={isLoading}
+          >
+            {isLoading === true && <ImSpinner10 className="loader-icon" />}
+            <span>Login</span>
           </button>
         </div>
         <div className="back text-center">
