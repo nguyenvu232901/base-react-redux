@@ -1,13 +1,12 @@
 // store.js
-import { createStore, combineReducers } from "redux";
-import userReducer from "./userSlice";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import rootReducer from "./reducer/rootReducer";
 
-// Kết hợp reducer (có thể mở rộng sau này)
-const rootReducer = combineReducers({
-  user: userReducer,
-});
-
-// Tạo store
-const store = createStore(rootReducer);
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;

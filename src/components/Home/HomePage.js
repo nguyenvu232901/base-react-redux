@@ -1,6 +1,13 @@
 import videoHomepage from "../../assets/video-homepage.mp4";
+import { useSelector, useDispatch } from "react-redux";
+import { INCREMENT, DECREMENT } from "../../redux/action/counterAction";
 
 const HomePage = (props) => {
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const account = useSelector((state) => state.user.account);
+
+  console.log("account: ", account, " isAuthenticated: ", isAuthenticated);
+
   return (
     <div className="homepage-container">
       <video autoPlay loop muted>
@@ -16,6 +23,8 @@ const HomePage = (props) => {
           <button>Get's started. It's free</button>
         </div>
       </div>
+
+      <div className="count-content"></div>
     </div>
   );
 };
