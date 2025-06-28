@@ -39,8 +39,10 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <DiReact size={"3em"} color={"00bfff"} />
-            Nguyen Vu Coder
+            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+              <DiReact size={"3em"} color={"00bfff"} />
+              Nguyen Vu Coder
+            </Link>
           </div>
         </SidebarHeader>
 

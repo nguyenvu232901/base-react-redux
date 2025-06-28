@@ -1,13 +1,21 @@
 // store.js
-import { createStore, combineReducers } from "redux";
-import userReducer from "./userSlice";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import rootReducer from "./reducer/rootReducer";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-// Kết hợp reducer (có thể mở rộng sau này)
-const rootReducer = combineReducers({
-  user: userReducer,
-});
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
-// Tạo store
-const store = createStore(rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export default store;
+const store = createStore(
+  persistedReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+let persistor = persistStore(store);
+export { store, persistor };
