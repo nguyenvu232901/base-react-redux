@@ -30,7 +30,7 @@ instance.interceptors.request.use(
 
     // Do something with request error
     return Promise.reject(error);
-  },
+  }
 );
 
 // Add a response interceptor
@@ -51,7 +51,7 @@ instance.interceptors.response.use(
     return error && error.response && error.response.data
       ? error.response.data
       : Promise.reject(error);
-  },
+  }
 );
 
 export default instance;

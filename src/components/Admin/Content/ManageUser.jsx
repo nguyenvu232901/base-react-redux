@@ -3,10 +3,7 @@ import './ManageUser.scss'; // Assuming you have a CSS file for styling
 import { FcPlus } from 'react-icons/fc';
 import { useState, useEffect } from 'react';
 import TableUser from './TableUser';
-import {
-  getAllUsers,
-  getUserWithPaginate,
-} from '../../../services/apiServices';
+import { getAllUsers, getUserWithPaginate } from '../../../services/apiServices';
 import ModelUpdateUser from './ModelUpdateUser';
 import ModelViewUser from './ModelViewUser';
 import ModelDeleteUser from './ModelDeleteUser';
@@ -78,10 +75,7 @@ const ManageUser = props => {
       <div className='title'>Manage User</div>
       <div className='users-content'>
         <div className='btn-add-new'>
-          <button
-            className='btn btn-primary'
-            onClick={() => setShowModelCreateUser(true)}
-          >
+          <button className='btn btn-primary' onClick={() => setShowModelCreateUser(true)}>
             <FcPlus />
             Add new users
           </button>

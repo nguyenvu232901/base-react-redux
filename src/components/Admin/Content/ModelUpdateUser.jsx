@@ -55,7 +55,7 @@ const ModelUpdateUser = props => {
     return String(email)
       .toLowerCase()
       .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.\(".+"\))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
 
@@ -124,7 +124,9 @@ const ModelUpdateUser = props => {
         <Modal.Body>
           <form className='row g-3'>
             <div className='col-md-6'>
-              <label className='form-label'>Email</label>
+              <label className='form-label' htmlFor='email'>
+                Email
+              </label>
               <input
                 type='email'
                 className='form-control'
@@ -134,7 +136,9 @@ const ModelUpdateUser = props => {
               />
             </div>
             <div className='col-md-6'>
-              <label className='form-label'>Password</label>
+              <label className='form-label' htmlFor='password'>
+                Password
+              </label>
               <input
                 type='password'
                 className='form-control'
@@ -145,7 +149,9 @@ const ModelUpdateUser = props => {
             </div>
 
             <div className='col-md-6'>
-              <label className='form-label'>UserName</label>
+              <label className='form-label' htmlFor='username'>
+                UserName
+              </label>
               <input
                 type='text'
                 className='form-control'
@@ -154,12 +160,10 @@ const ModelUpdateUser = props => {
               />
             </div>
             <div className='col-md-4'>
-              <label className='form-label'>Role</label>
-              <select
-                className='form-select'
-                value={role}
-                onChange={e => setRole(e.target.value)}
-              >
+              <label className='form-label' htmlFor='role'>
+                Role
+              </label>
+              <select className='form-select' value={role} onChange={e => setRole(e.target.value)}>
                 <option value={'USER'}>USER</option>
                 <option value={'ADMIN'}>ADMIN</option>
               </select>
@@ -179,11 +183,7 @@ const ModelUpdateUser = props => {
             </div>
 
             <div className='col-md-12 img-preview'>
-              {preivewImage ? (
-                <img src={preivewImage} alt='Preview' />
-              ) : (
-                <span>Preview Image</span>
-              )}
+              {preivewImage ? <img src={preivewImage} alt='Preview' /> : <span>Preview Image</span>}
             </div>
           </form>
         </Modal.Body>

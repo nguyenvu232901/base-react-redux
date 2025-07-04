@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: [
     'eslint:recommended',
@@ -10,6 +11,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
     'prettier',
+    // 'plugin:prettier/recommended', // Temporarily disabled due to conflicts
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -18,7 +20,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', 'react-hooks', 'jsx-a11y'],
+  plugins: ['react', 'react-hooks', 'jsx-a11y', 'prettier'],
   rules: {
     // React rules
     'react/prop-types': 'warn',
@@ -37,10 +39,7 @@ module.exports = {
     'react/jsx-equals-spacing': ['error', 'never'],
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
-    'react/jsx-max-props-per-line': [
-      'error',
-      { maximum: 1, when: 'multiline' },
-    ],
+    'react/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
     'react/jsx-no-bind': 'warn',
     'react/jsx-no-literals': 'off',
     'react/jsx-pascal-case': 'error',
@@ -61,7 +60,16 @@ module.exports = {
     'no-duplicate-imports': 'error',
     'no-multiple-empty-lines': ['error', { max: 2 }],
     'eol-last': 'error',
-    'comma-dangle': ['error', 'always-multiline'],
+    'comma-dangle': [
+      'error',
+      {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+        imports: 'always-multiline',
+        exports: 'always-multiline',
+        functions: 'never',
+      },
+    ],
     semi: ['error', 'always'],
     quotes: ['error', 'single', { avoidEscape: true }],
     indent: ['error', 2],
@@ -74,10 +82,7 @@ module.exports = {
     'arrow-spacing': 'error',
     'comma-spacing': 'error',
     'key-spacing': 'error',
-    'object-property-newline': [
-      'error',
-      { allowAllPropertiesOnSameLine: true },
-    ],
+    'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
     'object-curly-newline': ['error', { multiline: true, consistent: true }],
     'array-element-newline': ['error', 'consistent'],
     'array-bracket-newline': ['error', 'consistent'],
