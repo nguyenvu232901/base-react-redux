@@ -1,83 +1,23 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store, persistor } from './redux/store';
+import { store } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import 'nprogress/nprogress.css';
-import { PersistGate } from 'redux-persist/integration/react';
 import Layout from './Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 
-
 // Debug logging
 // eslint-disable-next-line no-console
-console.log('🚀 Starting React app initialization...');
+console.log('🚀 Starting React app (NO PERSIST) initialization...');
 // eslint-disable-next-line no-console
 console.log('📦 Store:', store);
-// eslint-disable-next-line no-console
-console.log('💾 Persistor:', persistor);
 // eslint-disable-next-line no-console
 console.log('🌍 Environment:', process.env.NODE_ENV);
 // eslint-disable-next-line no-console
 console.log('📍 Current URL:', window.location.href);
-
-// Enhanced loading component with debug info
-const LoadingComponent = () => {
-  // eslint-disable-next-line no-console
-  console.log('⏳ PersistGate is loading...');
-
-  // Add timeout to detect stuck loading
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      // eslint-disable-next-line no-console
-      console.warn(
-        '⚠️ PersistGate loading timeout - this might indicate an issue with Redux Persist'
-      );
-    }, 5000); // 5 second timeout
-
-    return () => clearTimeout(timer);
-  }, []);
-  return (
-    <div
-      style={{
-        padding: '20px',
-        textAlign: 'center',
-        fontFamily: 'Arial, sans-serif',
-        background: '#f8f9fa',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <h2>🔄 Loading Application...</h2>
-      <p>Initializing Redux store and persisted state...</p>
-      <div style={{ marginTop: '20px' }}>
-        <div
-          style={{
-            width: '50px',
-            height: '50px',
-            border: '3px solid #f3f3f3',
-            borderTop: '3px solid #007bff',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-          }}
-        />
-      </div>
-      <style>
-        {`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}
-      </style>
-    </div>
-  );
-};
 
 try {
   // eslint-disable-next-line no-console
@@ -85,30 +25,19 @@ try {
   const root = ReactDOM.createRoot(document.getElementById('root'));
 
   // eslint-disable-next-line no-console
-  console.log('🎨 Rendering app...');
+  console.log('🎨 Rendering app (without persist)...');
   root.render(
     <ErrorBoundary>
       <Provider store={store}>
-        <PersistGate
-          loading={<LoadingComponent />}
-          persistor={persistor}
-          onBeforeLift={() => {
-            // eslint-disable-next-line no-console
-            console.log('🔄 PersistGate: About to lift app...');
-          }}
-        >
-          {/* <React.StrictMode> */}
-          <BrowserRouter>
-            <Layout />
-          </BrowserRouter>
-          {/* </React.StrictMode> */}
-        </PersistGate>
+        <BrowserRouter>
+          <Layout />
+        </BrowserRouter>
       </Provider>
     </ErrorBoundary>
   );
 
   // eslint-disable-next-line no-console
-  console.log('✅ App render completed successfully');
+  console.log('✅ App render completed successfully (no persist)');
 } catch (error) {
   // eslint-disable-next-line no-console
   console.error('❌ Failed to render app:', error);
@@ -128,7 +57,7 @@ try {
           Reload Application
         </button>
         <p style="margin-top: 20px; font-size: 14px; color: #666;">
-          If this error persists, please check the browser console for more details.
+          This version runs without Redux Persist to isolate the issue.
         </p>
       </div>
     `;
