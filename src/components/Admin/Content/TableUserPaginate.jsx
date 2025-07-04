@@ -1,5 +1,6 @@
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
+import PropTypes from 'prop-types';
 
 const TableUserPaginate = props => {
   const { listUsers, pageCount } = props;
@@ -8,7 +9,6 @@ const TableUserPaginate = props => {
   const handlePageClick = event => {
     props.fetchListUsersPaginate(+event.selected + 1);
     props.setCurrentPage(+event.selected + 1);
-    console.log(`User requested page number ${event.selected}`);
   };
 
   return (
@@ -26,9 +26,9 @@ const TableUserPaginate = props => {
         <tbody>
           {listUsers
             && listUsers.length > 0
-            && listUsers.map((item, index) => {
+            && listUsers.map((item) => {
               return (
-                <tr key={`table-users-${index}`}>
+                <tr key={`table-users-${item.id}`}>
                   <td>{item.id}</td>
                   <td>{item.username}</td>
                   <td>{item.email}</td>
@@ -90,6 +90,24 @@ const TableUserPaginate = props => {
       )}
     </>
   );
+};
+
+TableUserPaginate.propTypes = {
+  listUsers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      email: PropTypes.string,
+      username: PropTypes.string,
+      role: PropTypes.string,
+    })
+  ).isRequired,
+  pageCount: PropTypes.number.isRequired,
+  fetchListUsersPaginate: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  handleClickBtnView: PropTypes.func.isRequired,
+  handleClickBtnUpdate: PropTypes.func.isRequired,
+  handleClickBtnDelete: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
 
 export default TableUserPaginate;

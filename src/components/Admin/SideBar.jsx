@@ -14,6 +14,7 @@ import sidebarBg from '../../assets/bg2.jpg';
 import { DiReact } from 'react-icons/di';
 import { MdDashboard } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const SideBar = props => {
   const { collapsed, toggled, handleToggleSidebar } = props;
@@ -111,6 +112,12 @@ const SideBar = props => {
       </ProSidebar>
     </>
   );
+};
+
+SideBar.propTypes = {
+  collapsed: PropTypes.bool.isRequired,
+  toggled: PropTypes.bool.isRequired,
+  handleToggleSidebar: PropTypes.func.isRequired,
 };
 
 export default SideBar;

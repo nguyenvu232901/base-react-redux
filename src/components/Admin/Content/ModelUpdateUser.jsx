@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import PropTypes from 'prop-types';
 import './ManageUser.scss'; // Assuming you have a CSS file for styling
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
@@ -20,7 +21,6 @@ const ModelUpdateUser = props => {
     setPreviewImage('');
     props.resetUpdateData();
   };
-  const handleShow = () => setShow(true);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +30,6 @@ const ModelUpdateUser = props => {
   const [preivewImage, setPreviewImage] = useState('');
 
   useEffect(() => {
-    console.log('run useEffect', dataUpdate);
     if (!_.isEmpty(dataUpdate)) {
       //update state
       setEmail(dataUpdate.email);
@@ -89,7 +88,6 @@ const ModelUpdateUser = props => {
     // data.append("userIamge", image);
 
     const data = await putUpdateUser(dataUpdate.id, username, role, image);
-    console.log('>>>Check', data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
@@ -198,6 +196,21 @@ const ModelUpdateUser = props => {
       </Modal>
     </>
   );
+};
+
+ModelUpdateUser.propTypes = {
+  show: PropTypes.bool.isRequired,
+  setShow: PropTypes.func.isRequired,
+  dataUpdate: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    email: PropTypes.string,
+    username: PropTypes.string,
+    role: PropTypes.string,
+    image: PropTypes.string,
+  }).isRequired,
+  resetUpdateData: PropTypes.func.isRequired,
+  fetchListUsersPaginate: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
 
 export default ModelUpdateUser;

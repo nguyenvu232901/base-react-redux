@@ -5,7 +5,7 @@ import { postRegister } from '../../services/apiServices';
 import { toast } from 'react-toastify';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const Register = props => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [username, setusername] = useState('');
   const [password, setpassword] = useState('');
@@ -34,7 +34,7 @@ const Register = props => {
         <button>Sign up</button>
       </div> */}
       <div className='title col-4 mx-auto'>Nguyen Vu Coder</div>
-      <div className='welcome col-4 mx-auto'>Hello, who's this?</div>
+      <div className='welcome col-4 mx-auto'>Hello, who&apos;s this?</div>
       <div className='content-form col-4 mx-auto'>
         <div className='form-group'>
           <label htmlFor='Email'>Email</label>
