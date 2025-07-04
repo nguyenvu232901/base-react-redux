@@ -1,5 +1,5 @@
-import {  DECREMENT } from '../action/counterAction';
-import { LOGIN_SUCCESS } from '../action/userAction';
+import { DECREMENT } from '../action/counterAction';
+import { LOGIN_SUCCESS, LOGOUT } from '../action/userAction';
 const INITIAL_STATE = {
   account: {
     access_token: '',
@@ -24,6 +24,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         role: action?.payload?.DT?.role,
       },
       isAuthenticated: true,
+    };
+  case LOGOUT:
+    return {
+      ...state,
+      isAuthenticated: false,
     };
 
   case DECREMENT:

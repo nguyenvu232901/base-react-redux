@@ -65,18 +65,31 @@ const Register = props => {
               value={password}
               onChange={e => setpassword(e.target.value)}
             />
-            <span
+            <button
+              type='button'
+              tabIndex={0}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
               style={{
                 position: 'absolute',
                 right: 10,
                 top: '50%',
                 transform: 'translateY(-50%)',
                 cursor: 'pointer',
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
               }}
               onClick={() => setShowPassword(!showPassword)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setShowPassword(!showPassword);
+                }
+              }}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            </button>
           </div>
         </div>
         <div>
@@ -88,6 +101,13 @@ const Register = props => {
           <span
             onClick={() => {
               navigate('/');
+            }}
+            role='button'
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                navigate('/');
+              }
             }}
           >
             {' '}

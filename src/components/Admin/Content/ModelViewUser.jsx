@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './ManageUser.scss'; // Assuming you have a CSS file for styling
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { postCreateNewUser } from '../../../services/apiServices';
-const ModelCreateUser = props => {
-  const { show, setShow } = props; //object dung {}
+import { putUpdateUser } from '../../../services/apiServices';
+import _ from 'lodash';
+
+const ModelViewUser = props => {
+  const { show, setShow, dataUpdate } = props; //object dung {}
 
   const handleClose = () => {
     setShow(false);
@@ -16,6 +18,7 @@ const ModelCreateUser = props => {
     setRole('USER');
     setImage('');
     setPreviewImage('');
+    props.resetUpdateData();
   };
   const handleShow = () => setShow(true);
 
@@ -25,6 +28,20 @@ const ModelCreateUser = props => {
   const [role, setRole] = useState('USER');
   const [image, setImage] = useState('');
   const [preivewImage, setPreviewImage] = useState('');
+
+  useEffect(() => {
+    console.log('run useEffect', dataUpdate);
+    if (!_.isEmpty(dataUpdate)) {
+      //update state
+      setEmail(dataUpdate.email);
+      setUsername(dataUpdate.username);
+      setRole(dataUpdate.role);
+      setImage('');
+      if (dataUpdate.image) {
+        setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+      }
+    }
+  }, [dataUpdate]);
 
   const handleUploadImage = e => {
     if (e?.target?.files?.[0]) {
@@ -38,7 +55,7 @@ const ModelCreateUser = props => {
     return String(email)
       .toLowerCase()
       .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.\(".+"\))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
 
@@ -63,16 +80,6 @@ const ModelCreateUser = props => {
       return;
     }
 
-    if (!password) {
-      toast.error('Invalid password');
-      return;
-    }
-
-    if (!username) {
-      toast.error('Invalid Username');
-      return;
-    }
-
     // // Cách 2: dùng cho gửi file
     // const data = new FormData();
     // data.append("email", email);
@@ -81,27 +88,20 @@ const ModelCreateUser = props => {
     // data.append("role", role);
     // data.append("userIamge", image);
 
-    const data = await postCreateNewUser(
-      email,
-      password,
-      username,
-      role,
-      image,
-    );
-    // console.log('helo');
-    // console.log(data);
+    const data = await putUpdateUser(dataUpdate.id, username, role, image);
+    console.log('>>>Check', data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      // await props.fetchListUsers();
-      props.setCurrentPage(1);
-      await props.fetchListUsersPaginate(1);
+      await props.fetchListUsers();
     }
 
     if (data && data.EC !== 0) {
       toast.error(data.EM);
     }
   };
+
+  // console.log('check dataUpdate', dataUpdate);
 
   return (
     <>
@@ -117,7 +117,7 @@ const ModelCreateUser = props => {
         className='model-add-user'
       >
         <Modal.Header closeButton>
-          <Modal.Title>Admin new user</Modal.Title>
+          <Modal.Title>Detail view a user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className='row g-3'>
@@ -129,33 +129,46 @@ const ModelCreateUser = props => {
                 type='email'
                 className='form-control'
                 value={email}
+                disabled
+                autoComplete='email'
                 onChange={e => setEmail(e.target.value)}
               />
             </div>
             <div className='col-md-6'>
-              <label className='form-label' htmlFor='password'>Password</label>
+              <label className='form-label' htmlFor='password'>
+                Password
+              </label>
               <input
                 type='password'
                 className='form-control'
                 value={password}
+                disabled
+                autoComplete='current-password'
                 onChange={e => setPassword(e.target.value)}
               />
             </div>
 
             <div className='col-md-6'>
-              <label className='form-label' htmlFor='username'>UserName</label>
+              <label className='form-label' htmlFor='username'>
+                UserName
+              </label>
               <input
                 type='text'
                 className='form-control'
                 value={username}
+                disabled
+                autoComplete='username'
                 onChange={e => setUsername(e.target.value)}
               />
             </div>
             <div className='col-md-4'>
-              <label className='form-label' htmlFor='role'>Role</label>
+              <label className='form-label' htmlFor='role'>
+                Role
+              </label>
               <select
                 className='form-select'
                 value={role}
+                disabled
                 onChange={e => setRole(e.target.value)}
               >
                 <option value={'USER'}>USER</option>
@@ -172,16 +185,13 @@ const ModelCreateUser = props => {
                 className='form-control'
                 hidden
                 id='labelUpload'
+                disabled
                 onChange={handleUploadImage}
               />
             </div>
 
             <div className='col-md-12 img-preview'>
-              {preivewImage ? (
-                <img src={preivewImage} alt='Preview' />
-              ) : (
-                <span>Preview Image</span>
-              )}
+              {preivewImage ? <img src={preivewImage} alt='Preview' /> : <span>Preview Image</span>}
             </div>
           </form>
         </Modal.Body>
@@ -189,13 +199,13 @@ const ModelCreateUser = props => {
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary' onClick={() => handSubitCreateUser()}>
+          {/* <Button variant="primary" onClick={() => handSubitCreateUser()}>
             Save
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default ModelCreateUser;
+export default ModelViewUser;

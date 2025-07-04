@@ -18,7 +18,7 @@ root.render(
       </BrowserRouter>
       {/* </React.StrictMode> */}
     </PersistGate>
-  </Provider>,
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

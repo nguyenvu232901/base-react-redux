@@ -171,9 +171,11 @@ const Login = props => {
                 cursor: 'pointer',
               }}
               onClick={() => setShowPassword(!showPassword)}
-              role="button"
+              role='button'
               tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setShowPassword(!showPassword); }}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') setShowPassword(!showPassword);
+              }}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
@@ -181,19 +183,21 @@ const Login = props => {
         </div>
         <span
           className='forgot-password'
-          role="button"
+          role='button'
           tabIndex={0}
-          onClick={() => {/* handle forgot password */}}
-          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') {/* handle forgot password */} }}
+          onClick={() => {
+            /* handle forgot password */
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              /* handle forgot password */
+            }
+          }}
         >
           Forgot password
         </span>
         <div>
-          <button
-            className='btn-submit'
-            onClick={() => handleLogin()}
-            disabled={isLoading}
-          >
+          <button className='btn-submit' onClick={() => handleLogin()} disabled={isLoading}>
             {isLoading === true && <ImSpinner10 className='loader-icon' />}
             <span>Login</span>
           </button>
@@ -203,9 +207,11 @@ const Login = props => {
             onClick={() => {
               navigate('/');
             }}
-            role="button"
+            role='button'
             tabIndex={0}
-            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') navigate('/'); }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') navigate('/');
+            }}
           >
             {' '}
             &#60;&#60; Go Back Home
