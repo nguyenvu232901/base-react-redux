@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import Layout from './Layout';
 import ErrorBoundary from './components/ErrorBoundary';
+import React from 'react';
 
 // Debug logging
 // eslint-disable-next-line no-console
