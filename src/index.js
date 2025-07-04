@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import reportWebVitals from './reportWebVitals';
@@ -26,6 +27,18 @@ console.log('📍 Current URL:', window.location.href);
 const LoadingComponent = () => {
   // eslint-disable-next-line no-console
   console.log('⏳ PersistGate is loading...');
+
+  // Add timeout to detect stuck loading
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '⚠️ PersistGate loading timeout - this might indicate an issue with Redux Persist'
+      );
+    }, 5000); // 5 second timeout
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div
       style={{
@@ -76,7 +89,14 @@ try {
   root.render(
     <ErrorBoundary>
       <Provider store={store}>
-        <PersistGate loading={<LoadingComponent />} persistor={persistor}>
+        <PersistGate
+          loading={<LoadingComponent />}
+          persistor={persistor}
+          onBeforeLift={() => {
+            // eslint-disable-next-line no-console
+            console.log('🔄 PersistGate: About to lift app...');
+          }}
+        >
           {/* <React.StrictMode> */}
           <BrowserRouter>
             <Layout />
