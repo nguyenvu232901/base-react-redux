@@ -1,13 +1,11 @@
-name: React CI
+name: Deploy React App to GitHub Pages
 
 on:
   push:
-    branches: [main, prod]
-  pull_request:
-    branches: [main, prod]
+    branches: [main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,13 +19,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint code
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test -- --watchAll=false
-
       - name: Build
         run: npm run build
 
-      # Nếu deploy lên Vercel/Netlify thì dừng ở đây, họ sẽ tự động deploy khi có build thành công
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build

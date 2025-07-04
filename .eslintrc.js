@@ -37,7 +37,10 @@ module.exports = {
     'react/jsx-equals-spacing': ['error', 'never'],
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
-    'react/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
+    'react/jsx-max-props-per-line': [
+      'error',
+      { maximum: 1, when: 'multiline' },
+    ],
     'react/jsx-no-bind': 'warn',
     'react/jsx-no-literals': 'off',
     'react/jsx-pascal-case': 'error',
@@ -59,9 +62,9 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { max: 2 }],
     'eol-last': 'error',
     'comma-dangle': ['error', 'always-multiline'],
-    'semi': ['error', 'always'],
-    'quotes': ['error', 'single', { avoidEscape: true }],
-    'indent': ['error', 2],
+    semi: ['error', 'always'],
+    quotes: ['error', 'single', { avoidEscape: true }],
+    indent: ['error', 2],
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-spacing': ['error', 'never'],
     'space-before-function-paren': ['error', 'always'],
@@ -71,7 +74,10 @@ module.exports = {
     'arrow-spacing': 'error',
     'comma-spacing': 'error',
     'key-spacing': 'error',
-    'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
+    'object-property-newline': [
+      'error',
+      { allowAllPropertiesOnSameLine: true },
+    ],
     'object-curly-newline': ['error', { multiline: true, consistent: true }],
     'array-element-newline': ['error', 'consistent'],
     'array-bracket-newline': ['error', 'consistent'],
@@ -108,4 +114,4 @@ module.exports = {
       version: 'detect',
     },
   },
-}; 
+};
