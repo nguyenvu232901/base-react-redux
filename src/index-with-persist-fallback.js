@@ -16,35 +16,31 @@ console.log('🚀 Starting React app with persist fallback...');
 // eslint-disable-next-line no-console
 console.log('📦 Store:', store);
 // eslint-disable-next-line no-console
-console.log('� Persistor:', persistor);
-// eslint-disable-next-line no-console
-console.log('🌍 Environment:', process.env.NODE_ENV);
-// eslint-disable-next-line no-console
-console.log('📍 Current URL:', window.location.href);
+console.log('💾 Persistor:', persistor);
 
 // Enhanced loading component with timeout
 const LoadingComponent = () => {
   const [showFallback, setShowFallback] = React.useState(false);
-
+  
   React.useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('⏳ PersistGate is loading...');
-
+    
     // Show fallback option after 5 seconds
     const timer = setTimeout(() => {
       // eslint-disable-next-line no-console
       console.warn('⚠️ PersistGate loading timeout - showing fallback option');
       setShowFallback(true);
     }, 5000);
-
+    
     return () => clearTimeout(timer);
   }, []);
 
   const handleSkipPersist = () => {
     // eslint-disable-next-line no-console
-    console.log('🔄 User chose to skip persist - clearing data...');
-
-    // Clear localStorage
+    console.log('🔄 User chose to skip persist - reloading without persist...');
+    
+    // Clear localStorage and reload with no-persist version
     try {
       localStorage.removeItem('persist:root');
       // eslint-disable-next-line no-console
@@ -53,41 +49,48 @@ const LoadingComponent = () => {
       // eslint-disable-next-line no-console
       console.warn('Failed to clear localStorage:', error);
     }
-
+    
     // Reload page
     window.location.reload();
   };
 
   return (
-    <div
-      style={{
-        padding: '20px',
-        textAlign: 'center',
-        fontFamily: 'Arial, sans-serif',
-        background: '#f8f9fa',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <div style={{ 
+      padding: '20px', 
+      textAlign: 'center', 
+      fontFamily: 'Arial, sans-serif',
+      background: '#f8f9fa',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
       <h2>🔄 Loading Application...</h2>
       <p>Initializing Redux store and persisted state...</p>
-
+      
+      <div style={{ marginTop: '20px' }}>
+        <div style={{ 
+          width: '50px', 
+          height: '50px', 
+          border: '3px solid #f3f3f3',
+          borderTop: '3px solid #007bff',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }} />
+      </div>
+      
       {showFallback && (
-        <div
-          style={{
-            marginTop: '30px',
-            padding: '20px',
-            background: '#fff3cd',
-            borderRadius: '8px',
-            border: '1px solid #ffeaa7',
-          }}
-        >
+        <div style={{ 
+          marginTop: '30px', 
+          padding: '20px', 
+          background: '#fff3cd', 
+          borderRadius: '8px',
+          border: '1px solid #ffeaa7'
+        }}>
           <h4>⚠️ Loading is taking longer than expected</h4>
           <p>This might be due to an issue with saved data.</p>
-          <button
+          <button 
             onClick={handleSkipPersist}
             style={{
               padding: '10px 20px',
@@ -96,13 +99,23 @@ const LoadingComponent = () => {
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
-              fontWeight: 'bold',
+              fontWeight: 'bold'
             }}
           >
             🔄 Clear Data & Continue
           </button>
+          <p style={{ fontSize: '12px', marginTop: '10px', color: '#856404' }}>
+            This will clear saved preferences but allow the app to load normally.
+          </p>
         </div>
       )}
+      
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };
@@ -117,8 +130,8 @@ try {
   root.render(
     <ErrorBoundary>
       <Provider store={store}>
-        <PersistGate
-          loading={<LoadingComponent />}
+        <PersistGate 
+          loading={<LoadingComponent />} 
           persistor={persistor}
           onBeforeLift={() => {
             // eslint-disable-next-line no-console
@@ -146,22 +159,12 @@ try {
       <div style="padding: 20px; color: red; font-family: Arial, sans-serif; text-align: center;">
         <h1>❌ Application Failed to Load</h1>
         <p><strong>Error:</strong> ${error.message}</p>
-        <details style="margin: 20px 0; text-align: left;">
-          <summary>Technical Details</summary>
-          <pre style="background: #f8f8f8; padding: 10px; overflow: auto; border-radius: 4px;">${error.stack}</pre>
-        </details>
         <button onclick="window.location.reload()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
           Reload Application
         </button>
-        <p style="margin-top: 20px; font-size: 14px; color: #666;">
-          This version runs without Redux Persist to isolate the issue.
-        </p>
       </div>
     `;
   }
 }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
