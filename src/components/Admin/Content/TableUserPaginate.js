@@ -1,17 +1,16 @@
-import Table from "react-bootstrap/Table";
-import ReactPaginate from "react-paginate";
+import Table from 'react-bootstrap/Table';
+import ReactPaginate from 'react-paginate';
 
-const TableUserPaginate = (props) => {
+const TableUserPaginate = props => {
   const { listUsers, pageCount } = props;
 
   // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
+  const handlePageClick = event => {
     props.fetchListUsersPaginate(+event.selected + 1);
     props.setCurrentPage(+event.selected + 1);
     console.log(`User requested page number ${event.selected}`);
   };
 
-  console.log("render view");
   return (
     <>
       <Table striped bordered hover>
@@ -25,9 +24,9 @@ const TableUserPaginate = (props) => {
           </tr>
         </thead>
         <tbody>
-          {listUsers &&
-            listUsers.length > 0 &&
-            listUsers.map((item, index) => {
+          {listUsers
+            && listUsers.length > 0
+            && listUsers.map((item, index) => {
               return (
                 <tr key={`table-users-${index}`}>
                   <td>{item.id}</td>
@@ -36,19 +35,19 @@ const TableUserPaginate = (props) => {
                   <td>{item.role}</td>
                   <td>
                     <button
-                      className="btn btn-secondary"
+                      className='btn btn-secondary'
                       onClick={() => props.handleClickBtnView(item)}
                     >
                       View
                     </button>
                     <button
-                      className="btn btn-warning mx-3"
+                      className='btn btn-warning mx-3'
                       onClick={() => props.handleClickBtnUpdate(item)}
                     >
                       Update
                     </button>
                     <button
-                      className="btn btn-danger"
+                      className='btn btn-danger'
                       onClick={() => props.handleClickBtnDelete(item)}
                     >
                       Delete
@@ -59,34 +58,36 @@ const TableUserPaginate = (props) => {
             })}
           {listUsers && listUsers.length === 0 && (
             <tr>
-              <td colSpan={"4"}>Not Found Data </td>
+              <td colSpan={'4'}>Not Found Data </td>
             </tr>
           )}
         </tbody>
       </Table>
-      <div className="user-pagination d-flex justify-content-center ">
-        <ReactPaginate
-          nextLabel="Next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
-          marginPagesDisplayed={2}
-          pageCount={pageCount}
-          previousLabel="< Prev"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          activeClassName="active"
-          renderOnZeroPageCount={null}
-          forcePage={props.currentPage - 1}
-        />
-      </div>
+      {pageCount > 0 && (
+        <div className='user-pagination d-flex justify-content-center '>
+          <ReactPaginate
+            nextLabel='Next >'
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={pageCount}
+            previousLabel='< Prev'
+            pageClassName='page-item'
+            pageLinkClassName='page-link'
+            previousClassName='page-item'
+            previousLinkClassName='page-link'
+            nextClassName='page-item'
+            nextLinkClassName='page-link'
+            breakLabel='...'
+            breakClassName='page-item'
+            breakLinkClassName='page-link'
+            containerClassName='pagination'
+            activeClassName='active'
+            renderOnZeroPageCount={null}
+            forcePage={props.currentPage - 1}
+          />
+        </div>
+      )}
     </>
   );
 };
