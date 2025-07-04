@@ -94,38 +94,38 @@
 // export default Login;
 
 //dùng redux
-import { useState } from "react";
-import "./Login.scss";
-import { useNavigate } from "react-router-dom";
-import { postLogin } from "../../services/apiServices";
-import { toast } from "react-toastify";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { doLogin } from "../../redux/action/userAction"; // Import the doLogin action
-import { ImSpinner10 } from "react-icons/im"; // Import spinner icon
-import { set } from "lodash";
+import { useState } from 'react';
+import './Login.scss';
+import { useNavigate } from 'react-router-dom';
+import { postLogin } from '../../services/apiServices';
+import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { doLogin } from '../../redux/action/userAction'; // Import the doLogin action
+import { ImSpinner10 } from 'react-icons/im'; // Import spinner icon
+import { set } from 'lodash';
 
-const Login = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setpassword] = useState("");
+const Login = props => {
+  const [email, setEmail] = useState('');
+  const [password, setpassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false); // State to manage loading
 
   const handleRegister = () => {
-    navigate("/register");
+    navigate('/register');
   };
   const handleLogin = async () => {
     //validate
 
     setIsLoading(true); // Set loading state to true
     //submit api
-    let data = await postLogin(email, password);
+    const data = await postLogin(email, password);
     if (data && +data.EC === 0) {
       dispatch(doLogin(data));
       toast.success(data.EM);
       setIsLoading(false); // Reset loading state
-      navigate("/");
+      navigate('/');
     }
 
     if (data && +data.EC !== 0) {
@@ -136,64 +136,78 @@ const Login = (props) => {
   };
   const navigate = useNavigate();
   return (
-    <div className="login-container ">
-      <div className="header">
+    <div className='login-container '>
+      <div className='header'>
         <span>Don't have an account yet?</span>
         <button onClick={() => handleRegister()}>Sign up</button>
       </div>
-      <div className="title col-4 mx-auto">Nguyen Vu Coder</div>
-      <div className="welcome col-4 mx-auto">Hello, who's this?</div>
-      <div className="content-form col-4 mx-auto">
-        <div className="form-group">
-          <label htmlFor="Email">Email</label>
+      <div className='title col-4 mx-auto'>Nguyen Vu Coder</div>
+      <div className='welcome col-4 mx-auto'>Hello, who's this?</div>
+      <div className='content-form col-4 mx-auto'>
+        <div className='form-group'>
+          <label htmlFor='Email'>Email</label>
           <input
-            type={"email"}
-            className="form-control"
+            type={'email'}
+            className='form-control'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="Password">Password</label>
-          <div style={{ position: "relative" }}>
+        <div className='form-group'>
+          <label htmlFor='Password'>Password</label>
+          <div style={{ position: 'relative' }}>
             <input
-              type={showPassword ? "text" : "password"}
-              className="form-control"
+              type={showPassword ? 'text' : 'password'}
+              className='form-control'
               value={password}
-              onChange={(e) => setpassword(e.target.value)}
+              onChange={e => setpassword(e.target.value)}
             />
             <span
               style={{
-                position: "absolute",
+                position: 'absolute',
                 right: 10,
-                top: "50%",
-                transform: "translateY(-50%)",
-                cursor: "pointer",
+                top: '50%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
               }}
               onClick={() => setShowPassword(!showPassword)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setShowPassword(!showPassword); }}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
         </div>
-        <span className="forgot-password">Forgot password</span>
+        <span
+          className='forgot-password'
+          role="button"
+          tabIndex={0}
+          onClick={() => {/* handle forgot password */}}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') {/* handle forgot password */} }}
+        >
+          Forgot password
+        </span>
         <div>
           <button
-            className="btn-submit"
+            className='btn-submit'
             onClick={() => handleLogin()}
             disabled={isLoading}
           >
-            {isLoading === true && <ImSpinner10 className="loader-icon" />}
+            {isLoading === true && <ImSpinner10 className='loader-icon' />}
             <span>Login</span>
           </button>
         </div>
-        <div className="back text-center">
+        <div className='back text-center'>
           <span
             onClick={() => {
-              navigate("/");
+              navigate('/');
             }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') navigate('/'); }}
           >
-            {" "}
+            {' '}
             &#60;&#60; Go Back Home
           </span>
         </div>
