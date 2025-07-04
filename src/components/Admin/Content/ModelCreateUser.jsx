@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import PropTypes from 'prop-types';
 import './ManageUser.scss'; // Assuming you have a CSS file for styling
 import { FcPlus } from 'react-icons/fc';
 import { toast } from 'react-toastify';
@@ -17,7 +18,6 @@ const ModelCreateUser = props => {
     setImage('');
     setPreviewImage('');
   };
-  const handleShow = () => setShow(true);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -188,6 +188,13 @@ const ModelCreateUser = props => {
       </Modal>
     </>
   );
+};
+
+ModelCreateUser.propTypes = {
+  show: PropTypes.bool.isRequired,
+  setShow: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  fetchListUsersPaginate: PropTypes.func.isRequired,
 };
 
 export default ModelCreateUser;

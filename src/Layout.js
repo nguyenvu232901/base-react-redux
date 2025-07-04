@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import User from './components/User/User';
 import Admin from './components/Admin/Admin';
 import HomePage from './components/Home/HomePage';
@@ -9,7 +9,7 @@ import App from './App';
 import { ToastContainer } from 'react-toastify';
 import Register from './components/Auth/Register';
 
-const Layout = props => {
+const Layout = () => {
   return (
     <>
       <Routes>

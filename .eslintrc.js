@@ -40,7 +40,7 @@ module.exports = {
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
     'react/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
-    'react/jsx-no-bind': 'warn',
+    'react/jsx-no-bind': 'off',
     'react/jsx-no-literals': 'off',
     'react/jsx-pascal-case': 'error',
     'react/jsx-sort-props': 'off',

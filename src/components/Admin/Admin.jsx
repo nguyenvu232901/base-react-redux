@@ -1,12 +1,17 @@
 import SideBar from './SideBar';
 import './Admin.scss'; // Assuming you have a CSS file for styling
 import { FaBars } from 'react-icons/fa';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 const Admin = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
     <div className='admin-container'>
       <div className='admin-sidebar'>
@@ -14,7 +19,7 @@ const Admin = () => {
       </div>
       <div className='admin-content'>
         <div className='admin-header'>
-          <FaBars onClick={() => setCollapsed(!collapsed)} />
+          <FaBars onClick={handleToggleSidebar} />
         </div>
         <div className='admin-main'>
           <Outlet />

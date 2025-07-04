@@ -1,4 +1,5 @@
 import Table from 'react-bootstrap/Table';
+import PropTypes from 'prop-types';
 
 const TableUser = props => {
   const { listUsers } = props;
@@ -18,9 +19,9 @@ const TableUser = props => {
         <tbody>
           {listUsers
             && listUsers.length > 0
-            && listUsers.map((item, index) => {
+            && listUsers.map((item) => {
               return (
-                <tr key={`table-users-${index}`}>
+                <tr key={`table-users-${item.id}`}>
                   <td>{item.id}</td>
                   <td>{item.username}</td>
                   <td>{item.email}</td>
@@ -57,6 +58,20 @@ const TableUser = props => {
       </Table>
     </>
   );
+};
+
+TableUser.propTypes = {
+  listUsers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      email: PropTypes.string,
+      username: PropTypes.string,
+      role: PropTypes.string,
+    })
+  ).isRequired,
+  handleClickBtnView: PropTypes.func.isRequired,
+  handleClickBtnUpdate: PropTypes.func.isRequired,
+  handleClickBtnDelete: PropTypes.func.isRequired,
 };
 
 export default TableUser;

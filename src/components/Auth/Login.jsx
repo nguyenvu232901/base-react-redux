@@ -103,9 +103,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/userAction'; // Import the doLogin action
 import { ImSpinner10 } from 'react-icons/im'; // Import spinner icon
-import { set } from 'lodash';
-
-const Login = props => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -138,11 +136,11 @@ const Login = props => {
   return (
     <div className='login-container '>
       <div className='header'>
-        <span>Don't have an account yet?</span>
+        <span>Don&apos;t have an account yet?</span>
         <button onClick={() => handleRegister()}>Sign up</button>
       </div>
       <div className='title col-4 mx-auto'>Nguyen Vu Coder</div>
-      <div className='welcome col-4 mx-auto'>Hello, who's this?</div>
+      <div className='welcome col-4 mx-auto'>Hello, who&apos;s this?</div>
       <div className='content-form col-4 mx-auto'>
         <div className='form-group'>
           <label htmlFor='Email'>Email</label>

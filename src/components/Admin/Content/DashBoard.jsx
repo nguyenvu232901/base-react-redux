@@ -1,4 +1,4 @@
-const DashBoard = props => {
+const DashBoard = () => {
   return <div className='admin-dashboard'>Dashboard Content</div>;
 };
 

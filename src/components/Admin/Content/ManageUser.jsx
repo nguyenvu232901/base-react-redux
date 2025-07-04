@@ -2,14 +2,13 @@ import ModelCreateUser from './ModelCreateUser';
 import './ManageUser.scss'; // Assuming you have a CSS file for styling
 import { FcPlus } from 'react-icons/fc';
 import { useState, useEffect } from 'react';
-import TableUser from './TableUser';
-import { getAllUsers, getUserWithPaginate } from '../../../services/apiServices';
+import { getUserWithPaginate } from '../../../services/apiServices';
 import ModelUpdateUser from './ModelUpdateUser';
 import ModelViewUser from './ModelViewUser';
 import ModelDeleteUser from './ModelDeleteUser';
 import TableUserPaginate from './TableUserPaginate';
 
-const ManageUser = props => {
+const ManageUser = () => {
   const LIMIT_USER = 3;
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,12 +69,16 @@ const ManageUser = props => {
     // console.log('Delete user', user);
   };
 
+  const handleClickAddNewUser = () => {
+    setShowModelCreateUser(true);
+  };
+
   return (
     <div className='manage-user-container'>
       <div className='title'>Manage User</div>
       <div className='users-content'>
         <div className='btn-add-new'>
-          <button className='btn btn-primary' onClick={() => setShowModelCreateUser(true)}>
+          <button className='btn btn-primary' onClick={handleClickAddNewUser}>
             <FcPlus />
             Add new users
           </button>

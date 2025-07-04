@@ -1,5 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import PropTypes from 'prop-types';
 import { deleteUsers } from '../../../services/apiServices';
 import { toast } from 'react-toastify';
 
@@ -10,7 +11,6 @@ const ModelDeleteUser = props => {
 
   const handleSubmitDeleteuser = async () => {
     const data = await deleteUsers(dataDelete.id);
-    console.log('>>>Check', data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
@@ -23,7 +23,6 @@ const ModelDeleteUser = props => {
       toast.error(data.EM);
     }
   };
-  console.log(dataDelete);
 
   return (
     <>
@@ -51,6 +50,17 @@ const ModelDeleteUser = props => {
       </Modal>
     </>
   );
+};
+
+ModelDeleteUser.propTypes = {
+  show: PropTypes.bool.isRequired,
+  setShow: PropTypes.func.isRequired,
+  dataDelete: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    email: PropTypes.string,
+  }).isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  fetchListUsersPaginate: PropTypes.func.isRequired,
 };
 
 export default ModelDeleteUser;
