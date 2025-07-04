@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Layout from './Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 
+
 // Debug logging
 // eslint-disable-next-line no-console
 console.log('🚀 Starting React app initialization...');
