@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client';
-import React from 'react';
 
 // Simple test component
 const SimpleApp = () => {
