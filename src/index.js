@@ -125,7 +125,9 @@ try {
             console.log('🔄 PersistGate: About to lift app...');
           }}
         >
-          <BrowserRouter>
+          <BrowserRouter
+            basename={process.env.NODE_ENV === 'production' ? '/base-react-redux' : '/'}
+          >
             <Layout />
           </BrowserRouter>
         </PersistGate>

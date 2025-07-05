@@ -5,21 +5,31 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
+
 const Admin = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [toggled, setToggled] = useState(false);
 
   const handleToggleSidebar = () => {
+    setToggled(!toggled);
+  };
+
+  const handleCollapsedChange = () => {
     setCollapsed(!collapsed);
   };
 
   return (
     <div className='admin-container'>
       <div className='admin-sidebar'>
-        <SideBar collapsed={collapsed} />
+        <SideBar 
+          collapsed={collapsed} 
+          toggled={toggled}
+          handleToggleSidebar={handleToggleSidebar}
+        />
       </div>
       <div className='admin-content'>
         <div className='admin-header'>
-          <FaBars onClick={handleToggleSidebar} />
+          <FaBars onClick={handleCollapsedChange} />
         </div>
         <div className='admin-main'>
           <Outlet />
