@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.3.0",
     "@testing-library/user-event": "13.5.0",
-    "axios": "0.27.2",
+    "axios": "^1.10.0",
     "bootstrap": "5.2.0",
     "lodash": "4.17.21",
     "nprogress": "0.2.0",
@@ -31,13 +30,29 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:watch": "react-scripts test --watch",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx",
     "lint:fix": "eslint src --ext .js,.jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "code:check": "npm run lint && npm run format:check",
-    "code:fix": "npm run lint:fix && npm run format"
+    "code:fix": "npm run lint:fix && npm run format",
+    "find-ip": "node scripts/find-ip.js",
+    "docker:build": "docker build -t react-redux-app:latest .",
+    "docker:build-minimal": "docker build -f Dockerfile.minimal -t react-redux-app:minimal .",
+    "docker:run": "docker run -p 3000:80 react-redux-app:latest",
+    "docker:run-secure": "docker run --security-opt=no-new-privileges:true --cap-drop=ALL --read-only --tmpfs /tmp -p 3000:80 react-redux-app:latest",
+    "docker:run-bg": "docker run -d -p 3000:80 react-redux-app:latest",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up",
+    "docker:prod": "docker-compose up",
+    "deploy:prepare": "git add . && git commit -m 'Deploy changes' && git push origin main",
+    "security:audit": "npm audit",
+    "security:audit-fix": "npm audit fix",
+    "security:docker-scan": "docker scout cves react-redux-app:latest || echo 'Docker Scout not available'",
+    "security:check": "npm run security:audit && npm run security:docker-scan",
+    "docker:test": "powershell -ExecutionPolicy Bypass -File scripts/test-docker-builds.ps1"
   },
   "browserslist": {
     "production": [
@@ -52,6 +67,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -61,5 +77,4 @@
     "gh-pages": "^6.3.0",
     "prettier": "^3.6.2"
   }
-
 }

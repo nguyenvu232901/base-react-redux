@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: postgres:14
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=root
+      - POSTGRES_DB=postgres
+    ports:
+      - 5433:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  backend_nodejs:
+    depends_on:
+      - postgres_db
+    image: harypham97/hoidanit-c0x37a2662-v3:2.0
+    restart: unless-stopped
+    volumes:
+      - /express-app/node_modules
+    ports:
+      - 8081:8081
+    environment:
+      - DB_HOST=postgres_db
+      - DB_DATABASE_NAME=postgres
+      - DB_USERNAME=root
+      - DB_PORT=5432
+      - DB_PASSWORD=123456
+      - DB_DIALECT=postgres
+    stdin_open: true
+    tty: true
+    networks:
+      - app-network
+
+  # Frontend React App
+  frontend_react:
+    build: .
+    depends_on:
+      - backend_nodejs
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:8081
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  db:
+
+networks:
+  app-network:
+    driver: bridge

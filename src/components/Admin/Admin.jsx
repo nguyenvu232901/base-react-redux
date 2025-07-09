@@ -21,8 +21,8 @@ const Admin = () => {
   return (
     <div className='admin-container'>
       <div className='admin-sidebar'>
-        <SideBar 
-          collapsed={collapsed} 
+        <SideBar
+          collapsed={collapsed}
           toggled={toggled}
           handleToggleSidebar={handleToggleSidebar}
         />

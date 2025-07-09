@@ -72,10 +72,10 @@ module.exports = {
     ],
     semi: ['error', 'always'],
     quotes: ['error', 'single', { avoidEscape: true }],
-    indent: ['error', 2],
+    indent: 'off', // Disabled due to conflict with Prettier
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-spacing': ['error', 'never'],
-    'space-before-function-paren': ['error', 'always'],
+    'space-before-function-paren': 'off', // Disabled due to conflict with Prettier
     'space-before-blocks': 'error',
     'keyword-spacing': 'error',
     'space-infix-ops': 'error',
@@ -88,7 +88,7 @@ module.exports = {
     'array-bracket-newline': ['error', 'consistent'],
     'function-paren-newline': ['error', 'consistent'],
     'function-call-argument-newline': ['error', 'consistent'],
-    'operator-linebreak': ['error', 'before'],
+    'operator-linebreak': ['error', 'before', { overrides: { '&&': 'after', '||': 'after' } }],
     'implicit-arrow-linebreak': ['error', 'beside'],
     'no-mixed-operators': 'error',
     'no-unneeded-ternary': 'error',
