@@ -1,6 +1,6 @@
 // Test utility to check API configuration
 export const testApiConfig = () => {
-  const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://backend-api-puh1.onrender.com/';
+  const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://backend-api-puh1.onrender.com';
   const finalUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
 
   // eslint-disable-next-line no-console
