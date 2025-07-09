@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Frontend React App (Development mode)
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:8081
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Backend API (replace with your actual backend)
+  backend:
+    # Replace this with your actual backend image or build
+    # image: your-backend-image:latest
+    # build: ./backend
+    
+    # Placeholder - replace with your actual backend
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

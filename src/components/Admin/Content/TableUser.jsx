@@ -17,9 +17,9 @@ const TableUser = props => {
           </tr>
         </thead>
         <tbody>
-          {listUsers
-            && listUsers.length > 0
-            && listUsers.map((item) => {
+          {listUsers &&
+            listUsers.length > 0 &&
+            listUsers.map(item => {
               return (
                 <tr key={`table-users-${item.id}`}>
                   <td>{item.id}</td>

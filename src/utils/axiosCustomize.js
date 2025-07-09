@@ -12,8 +12,29 @@ NProgress.configure({
   // trickleRate: 0.5,
   trickleSpeed: 100,
 });
+// Get API base URL from environment variables
+const getApiBaseUrl = () => {
+  // Use environment variable if available, fallback to localhost for development
+  const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8081';
+
+  // Ensure URL ends with slash
+  const finalUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+
+  // Debug logging
+  // eslint-disable-next-line no-console
+  console.log('🌐 API Base URL:', finalUrl);
+  // eslint-disable-next-line no-console
+  console.log('🔧 Environment:', process.env.NODE_ENV);
+  // eslint-disable-next-line no-console
+  console.log('📱 User Agent:', navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop');
+  // eslint-disable-next-line no-console
+  console.log('🌍 Current URL:', window.location.href);
+
+  return finalUrl;
+};
+
 const instance = axios.create({
-  baseURL: 'http://localhost:8081/',
+  baseURL: getApiBaseUrl(),
   //   timeout: 1000,
   //   headers: { "X-Customize-Header": "foobar" },
 });

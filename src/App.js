@@ -1,6 +1,8 @@
 import './App.scss';
 import Header from './components/Header/Header';
 import { Outlet } from 'react-router-dom';
+// Import API config test for development debugging
+import './utils/testApiConfig';
 
 const App = () => {
   return (
