@@ -15,8 +15,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production --no-audit --no-fund
+# Install all dependencies (including dev dependencies for build)
+RUN npm ci --no-audit --no-fund
 
 # Copy source code
 COPY --chown=nextjs:nodejs . .
@@ -24,8 +24,13 @@ COPY --chown=nextjs:nodejs . .
 # Switch to non-root user for build
 USER nextjs
 
-# Build the app for production
-RUN npm run build
+# Set environment variables for build
+ENV CI=false
+ENV GENERATE_SOURCEMAP=false
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
+# Build the app for production with verbose logging
+RUN npm run build --verbose || (echo "Build failed, checking logs..." && cat /tmp/build.log 2>/dev/null || echo "No build log found" && exit 1)
 
 # Production stage with Nginx
 # Using latest stable version with security patches
