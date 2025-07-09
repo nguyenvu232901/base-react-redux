@@ -15,7 +15,7 @@ NProgress.configure({
 // Get API base URL from environment variables
 const getApiBaseUrl = () => {
   // Use environment variable if available, fallback to localhost for development
-  const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8081';
+  const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://backend-api-puh1.onrender.com/';
 
   // Ensure URL ends with slash
   const finalUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
