@@ -49,12 +49,10 @@ const SideBar = props => {
 
         <SidebarContent>
           <Menu iconShape='circle'>
-            <MenuItem
-              icon={<MdDashboard />}
-              // suffix={<span className="badge red">Main</span>}
-            >
-              Dashboard
-              <Link to='/admins' />
+            <MenuItem icon={<MdDashboard />}>
+              <Link to='/admins' style={{ textDecoration: 'none', color: 'inherit' }}>
+                Dashboard
+              </Link>
             </MenuItem>
           </Menu>
           <Menu iconShape='circle'>
@@ -65,19 +63,19 @@ const SideBar = props => {
               title='Features'
             >
               <MenuItem>
-                {' '}
-                Quản lý Users
-                <Link to='/admins/manage-users' />
+                <Link to='/admins/manage-users' style={{ textDecoration: 'none', color: 'inherit' }}>
+                  Quản lý Users
+                </Link>
               </MenuItem>
               <MenuItem>
-                {' '}
-                Quản lý Bài Quiz
-                <Link to='/admins/manage-quizzes' />
+                <Link to='/admins/manage-quizzes' style={{ textDecoration: 'none', color: 'inherit' }}>
+                  Quản lý Bài Quiz
+                </Link>
               </MenuItem>
               <MenuItem>
-                {' '}
-                Quản lý câu hỏi
-                <Link to='/admins/manage-questions' />
+                <Link to='/admins/manage-questions' style={{ textDecoration: 'none', color: 'inherit' }}>
+                  Quản lý câu hỏi
+                </Link>
               </MenuItem>
             </SubMenu>
           </Menu>

@@ -1,9 +1,24 @@
 import Table from 'react-bootstrap/Table';
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 
 const TableUserPaginate = props => {
   const { listUsers, pageCount } = props;
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Invoke when user click to request another page.
   const handlePageClick = event => {
@@ -34,24 +49,29 @@ const TableUserPaginate = props => {
                   <td>{item.email}</td>
                   <td>{item.role}</td>
                   <td>
-                    <button
-                      className='btn btn-secondary'
-                      onClick={() => props.handleClickBtnView(item)}
-                    >
-                      View
-                    </button>
-                    <button
-                      className='btn btn-warning mx-3'
-                      onClick={() => props.handleClickBtnUpdate(item)}
-                    >
-                      Update
-                    </button>
-                    <button
-                      className='btn btn-danger'
-                      onClick={() => props.handleClickBtnDelete(item)}
-                    >
-                      Delete
-                    </button>
+                    <div className="action-buttons">
+                      <button
+                        className='btn btn-secondary btn-sm'
+                        onClick={() => props.handleClickBtnView(item)}
+                        title="View user details"
+                      >
+                        {isMobile ? <FaEye /> : 'View'}
+                      </button>
+                      <button
+                        className='btn btn-warning btn-sm mx-1'
+                        onClick={() => props.handleClickBtnUpdate(item)}
+                        title="Update user"
+                      >
+                        {isMobile ? <FaEdit /> : 'Update'}
+                      </button>
+                      <button
+                        className='btn btn-danger btn-sm'
+                        onClick={() => props.handleClickBtnDelete(item)}
+                        title="Delete user"
+                      >
+                        {isMobile ? <FaTrash /> : 'Delete'}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

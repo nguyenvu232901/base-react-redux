@@ -48,9 +48,190 @@
         gap: 5px;
       }
     }
+
+    // Table responsive styles
+    .table-users-container {
+      overflow-x: auto;
+
+      table {
+        min-width: 600px;
+
+        // Action buttons styling
+        td {
+          &:last-child {
+            white-space: nowrap;
+
+            .action-buttons {
+              display: flex;
+              gap: 4px;
+              justify-content: flex-start;
+              align-items: center;
+
+              .btn {
+                font-size: 13px;
+                padding: 6px 12px;
+                border-radius: 4px;
+                transition: all 0.2s ease;
+
+                // Desktop buttons
+                @media (min-width: 769px) {
+                  min-width: 70px;
+                }
+
+                // Mobile responsive buttons
+                @media (max-width: 768px) {
+                  font-size: 12px;
+                  padding: 6px 8px;
+                  min-width: 36px;
+
+                  // Icon buttons on mobile
+                  svg {
+                    font-size: 14px;
+                  }
+                }
+
+                @media (max-width: 480px) {
+                  font-size: 11px;
+                  padding: 4px 6px;
+                  min-width: 32px;
+
+                  svg {
+                    font-size: 12px;
+                  }
+                }
+
+                // Hover effects
+                &:hover {
+                  transform: translateY(-1px);
+                  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                }
+
+                &:active {
+                  transform: translateY(0);
+                }
+              }
+
+              // Very small screens - stack vertically
+              @media (max-width: 380px) {
+                flex-direction: column;
+                gap: 2px;
+
+                .btn {
+                  width: 100%;
+                  margin: 0;
+                  padding: 4px 8px;
+                  font-size: 10px;
+
+                  svg {
+                    font-size: 11px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // Table headers responsive
+        th {
+          font-size: 14px;
+          padding: 8px;
+
+          @media (max-width: 768px) {
+            font-size: 12px;
+            padding: 6px 4px;
+          }
+        }
+
+        // Table cells responsive
+        td {
+          font-size: 14px;
+          padding: 8px;
+
+          @media (max-width: 768px) {
+            font-size: 12px;
+            padding: 6px 4px;
+          }
+        }
+      }
+    }
   }
 }
-// .user-pagination {
-//   display: flex;
-//   justify-content: center;
-// }
+// Pagination responsive styles
+.user-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .pagination {
+    margin: 0;
+
+    .page-item {
+      .page-link {
+        padding: 8px 12px;
+        font-size: 14px;
+
+        @media (max-width: 768px) {
+          padding: 6px 10px;
+          font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+          padding: 4px 8px;
+          font-size: 11px;
+        }
+      }
+    }
+
+    // Hide some pagination items on very small screens
+    @media (max-width: 380px) {
+      .page-item {
+        &:not(.active):not(.disabled) {
+          &:nth-child(n + 6):nth-last-child(n + 6) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Global responsive table improvements
+@media (max-width: 768px) {
+  .table-responsive {
+    border: none;
+
+    .table {
+      margin-bottom: 0;
+
+      th,
+      td {
+        vertical-align: middle;
+        border-color: #dee2e6;
+      }
+
+      // Reduce table font size on mobile
+      font-size: 13px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .table-responsive {
+    .table {
+      font-size: 12px;
+
+      th,
+      td {
+        padding: 6px 4px;
+      }
+    }
+  }
+}
+
+// Button size utilities for mobile
+.btn-xs {
+  padding: 2px 6px;
+  font-size: 10px;
+  line-height: 1.2;
+  border-radius: 3px;
+}
