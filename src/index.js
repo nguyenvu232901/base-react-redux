@@ -1,5 +1,4 @@
 import ReactDOM from 'react-dom/client';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import reportWebVitals from './reportWebVitals';
@@ -10,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Layout from './Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import React from 'react';
 
 // Debug logging
 // eslint-disable-next-line no-console
