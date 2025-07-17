@@ -8,10 +8,8 @@ Write-Host "1️⃣ Testing main Dockerfile (Nginx)..." -ForegroundColor Yellow
 try {
     docker build -t react-redux-app:test . *>$null
     Write-Host "✅ Main Dockerfile build: SUCCESS" -ForegroundColor Green
-    $mainBuild = $true
 } catch {
     Write-Host "❌ Main Dockerfile build: FAILED" -ForegroundColor Red
-    $mainBuild = $false
 }
 
 # Test minimal Dockerfile
@@ -20,10 +18,8 @@ Write-Host "2️⃣ Testing minimal Dockerfile (Caddy)..." -ForegroundColor Yell
 try {
     docker build -f Dockerfile.minimal -t react-redux-app:minimal-test . *>$null
     Write-Host "✅ Minimal Dockerfile build: SUCCESS" -ForegroundColor Green
-    $minimalBuild = $true
 } catch {
     Write-Host "❌ Minimal Dockerfile build: FAILED" -ForegroundColor Red
-    $minimalBuild = $false
 }
 
 # Test development Dockerfile
@@ -32,10 +28,8 @@ Write-Host "3️⃣ Testing development Dockerfile..." -ForegroundColor Yellow
 try {
     docker build -f Dockerfile.dev -t react-redux-app:dev-test . *>$null
     Write-Host "✅ Development Dockerfile build: SUCCESS" -ForegroundColor Green
-    $devBuild = $true
 } catch {
     Write-Host "❌ Development Dockerfile build: FAILED" -ForegroundColor Red
-    $devBuild = $false
 }
 
 Write-Host ""

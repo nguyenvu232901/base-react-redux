@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css';
 import { PersistGate } from 'redux-persist/integration/react';
 import Layout from './Layout';
 import ErrorBoundary from './components/ErrorBoundary';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import React from 'react';
 
 // Debug logging
@@ -116,20 +117,24 @@ try {
   console.log('🎨 Rendering app with persist...');
   root.render(
     <ErrorBoundary>
-      <Provider store={store}>
-        <PersistGate
-          loading={<LoadingComponent />}
-          persistor={persistor}
-          onBeforeLift={() => {
-            // eslint-disable-next-line no-console
-            console.log('🔄 PersistGate: About to lift app...');
-          }}
-        >
-          <BrowserRouter>
-            <Layout />
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
+      <GoogleOAuthProvider
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || 'your-google-client-id'}
+      >
+        <Provider store={store}>
+          <PersistGate
+            loading={<LoadingComponent />}
+            persistor={persistor}
+            onBeforeLift={() => {
+              // eslint-disable-next-line no-console
+              console.log('🔄 PersistGate: About to lift app...');
+            }}
+          >
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </PersistGate>
+        </Provider>
+      </GoogleOAuthProvider>
     </ErrorBoundary>
   );
 

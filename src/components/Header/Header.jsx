@@ -2,17 +2,48 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import { Navbar, NavDropdown } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { doLogout } from '../../redux/action/userAction';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+  const account = useSelector(state => state.user.account);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = () => {
     navigate('/login');
   };
+
   const handleRegister = () => {
     navigate('/register');
+  };
+
+  const handleLogout = () => {
+    // Check if user logged in with Google
+    const isGoogleUser = account?.access_token?.includes('google') ||
+                        account?.access_token?.includes('mock_google') ||
+                        account?.email?.includes('@gmail.com');
+
+    if (isGoogleUser) {
+      // Google logout - clear Google session
+      try {
+        // Clear Google OAuth session if available
+        if (window.google?.accounts?.id) {
+          window.google.accounts.id.disableAutoSelect();
+        }
+        toast.success('Google logout successful');
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn('Google logout error:', error);
+      }
+    }
+
+    // Redux logout
+    dispatch(doLogout());
+    toast.success('Logged out successfully');
+    navigate('/');
   };
   return (
     <Navbar expand='lg' className='bg-body-tertiary'>
@@ -45,9 +76,8 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <NavDropdown title='Settings' id='basic-nav-dropdown'>
-                <NavDropdown.Item href='#action/3.1'>Log In</NavDropdown.Item>
-                <NavDropdown.Item href='#action/3.2'>Log Out</NavDropdown.Item>
+              <NavDropdown title={`Welcome ${account?.username || 'User'}`} id='basic-nav-dropdown'>
+                <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
                 <NavDropdown.Item href='#action/3.3'>Profile</NavDropdown.Item>
               </NavDropdown>
             )}
