@@ -67,5 +67,94 @@
         cursor: pointer;
       }
     }
+
+    // Login divider
+    .login-divider {
+      margin: 20px 0;
+      text-align: center;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #ddd;
+        z-index: 1;
+      }
+
+      span {
+        background: #fff;
+        padding: 0 15px;
+        color: #666;
+        font-size: 14px;
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    // Google login container
+    .google-login-container {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+
+      // Override Google button styles
+      div[data-testid='google-login'] {
+        width: 100% !important;
+        max-width: 400px;
+
+        button {
+          width: 100% !important;
+          height: 45px !important;
+          border-radius: 8px !important;
+          font-size: 16px !important;
+          font-weight: 500 !important;
+          transition: all 0.3s ease !important;
+
+          &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+            transform: translateY(-1px) !important;
+          }
+        }
+      }
+    }
+  }
+
+  // Mobile responsive for Google login
+  @media (max-width: 768px) {
+    .content-form {
+      .google-login-container {
+        div[data-testid='google-login'] {
+          button {
+            height: 42px !important;
+            font-size: 15px !important;
+          }
+        }
+      }
+
+      .login-divider {
+        margin: 15px 0;
+
+        span {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .content-form {
+      .google-login-container {
+        div[data-testid='google-login'] {
+          button {
+            height: 40px !important;
+            font-size: 14px !important;
+          }
+        }
+      }
+    }
   }
 }

@@ -46,6 +46,17 @@ const postLogin = (userEmail, userPassword) => {
   });
 };
 
+//google login - create or login user
+const postGoogleLogin = (googleToken, userInfo) => {
+  return axios.post('api/v1/auth/google', {
+    token: googleToken,
+    email: userInfo.email,
+    username: userInfo.name,
+    image: userInfo.picture,
+    role: 'USER', // Default role for Google users
+  });
+};
+
 //register user
 const postRegister = (userEmail, username, userPassword) => {
   return axios.post('api/v1/register', {
@@ -62,5 +73,6 @@ export {
   deleteUsers,
   getUserWithPaginate,
   postLogin,
+  postGoogleLogin,
   postRegister,
 };
